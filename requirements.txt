@@ -1,4 +1,6 @@
+matplotlib==3.10.8
+scikit_learn==1.8.0
 torch==2.6.0
-typer==0.15.2
-fastapi==0.115.12
-uvicorn==0.34.2
+typer==0.21.1
+annotated-types==0.7.0
+typer==0.21.1

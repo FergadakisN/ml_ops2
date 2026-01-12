@@ -1,0 +1,17 @@
+{
+  "os": "macOS-26.2-arm64-arm-64bit",
+  "python": "CPython 3.12.12",
+  "startedAt": "2026-01-08T20:20:43.325711Z",
+  "program": "/Users/nikolaosfergadakis/Desktop/DTU/january_course/ml_ops/dtu_mlops2/my_project/src/my_project/train.py",
+  "codePath": "src/my_project/train.py",
+  "codePathLocal": "train.py",
+  "git": {
+    "remote": "git@github.com:FergadakisN/ml_ops2.git",
+    "commit": "1a4e8c9482b8075ea0d7bba2de38afbe55f6311d"
+  },
+  "email": "nikosfergadakis@gmail.com",
+  "root": "/Users/nikolaosfergadakis/Desktop/DTU/january_course/ml_ops/dtu_mlops2/my_project/src/my_project",
+  "host": "192.168.1.38",
+  "executable": "/opt/miniconda3/envs/mlops312/bin/python",
+  "writerId": "pgxd7l3a8fn9s809okk155y0ily00kog"
+}

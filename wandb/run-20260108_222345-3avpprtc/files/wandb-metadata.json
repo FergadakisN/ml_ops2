@@ -1,0 +1,37 @@
+{
+  "os": "macOS-26.2-arm64-arm-64bit",
+  "python": "CPython 3.12.12",
+  "startedAt": "2026-01-08T20:23:45.979483Z",
+  "program": "/Users/nikolaosfergadakis/Desktop/DTU/january_course/ml_ops/dtu_mlops2/my_project/src/my_project/train.py",
+  "codePath": "src/my_project/train.py",
+  "codePathLocal": "src/my_project/train.py",
+  "git": {
+    "remote": "git@github.com:FergadakisN/ml_ops2.git",
+    "commit": "1a4e8c9482b8075ea0d7bba2de38afbe55f6311d"
+  },
+  "email": "nikosfergadakis@gmail.com",
+  "root": "/Users/nikolaosfergadakis/Desktop/DTU/january_course/ml_ops/dtu_mlops2/my_project",
+  "host": "192.168.1.38",
+  "executable": "/opt/miniconda3/envs/mlops312/bin/python",
+  "cpu_count": 8,
+  "cpu_count_logical": 8,
+  "disk": {
+    "/": {
+      "total": "245107195904",
+      "used": "110945595392"
+    }
+  },
+  "memory": {
+    "total": "8589934592"
+  },
+  "apple": {
+    "name": "Apple M1",
+    "ecpuCores": 4,
+    "pcpuCores": 4,
+    "gpuCores": 8,
+    "memoryGb": 8,
+    "swapTotalBytes": "4294967296",
+    "ramTotalBytes": "8589934592"
+  },
+  "writerId": "9xy33rsu7dsa7jdwfa4hstjnhfdo1w4a"
+}
