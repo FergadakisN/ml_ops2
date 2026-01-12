@@ -1,5 +1,6 @@
 import torch
 import typer
+
 from .data import corrupt_mnist
 from .model import MyAwesomeModel
 
@@ -32,6 +33,7 @@ def evaluate(model_checkpoint: str) -> None:
 def main() -> None:
     """Entry point for the 'evaluate' console script."""
     typer.run(evaluate)
+
 
 if __name__ == "__main__":
     main()

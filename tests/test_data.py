@@ -1,7 +1,8 @@
-import torch
 import pytest
-from my_project.data import normalize
-from my_project.data import corrupt_mnist
+import torch
+
+from my_project.data import corrupt_mnist, normalize
+
 
 def test_normalize_outputs_reasonable_stats():
     x = torch.randn(8, 1, 28, 28)
@@ -28,7 +29,6 @@ def normalize(images: torch.Tensor) -> torch.Tensor:
     if std == 0:
         raise ValueError("Cannot normalize: standard deviation is zero.")
     return (images - images.mean()) / std
-
 
 
 def test_normalize_raises_when_std_zero():

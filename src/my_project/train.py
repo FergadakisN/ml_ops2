@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 import torch
+import torchvision
 import typer
+from sklearn.metrics import RocCurveDisplay, accuracy_score, f1_score, precision_score, recall_score
+
 import wandb
 from my_project.data import corrupt_mnist
 from my_project.model import MyAwesomeModel
-from sklearn.metrics import RocCurveDisplay, accuracy_score, f1_score, precision_score, recall_score
-import torchvision
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
 
@@ -52,14 +53,13 @@ def train(lr: float = 0.001, batch_size: int = 32, epochs: int = 5) -> None:
                 grid = torchvision.utils.make_grid(x, nrow=5, normalize=True)  # single image
                 wandb.log({"images": wandb.Image(grid, caption="Input images")})
 
-
                 # add a plot of histogram of the gradients
                 grads = torch.cat([p.grad.flatten() for p in model.parameters() if p.grad is not None])
                 wandb.log({"gradients": wandb.Histogram(grads.detach().cpu().numpy())})
 
         # add a custom matplotlib plot of the ROC curves
-        preds = torch.cat(preds, 0)          # logits [N,10]
-        targets = torch.cat(targets, 0)      # labels [N]
+        preds = torch.cat(preds, 0)  # logits [N,10]
+        targets = torch.cat(targets, 0)  # labels [N]
         probs = torch.softmax(preds, dim=1)  # probabilities [N,10]
 
         for class_id in range(10):
@@ -71,7 +71,6 @@ def train(lr: float = 0.001, batch_size: int = 32, epochs: int = 5) -> None:
                 name=f"ROC curve for {class_id}",
                 plot_chance_level=(class_id == 2),
             )
-
 
         # alternatively use wandb.log({"roc": wandb.Image(plt)}
         wandb.log({"roc": wandb.Image(plt)})
