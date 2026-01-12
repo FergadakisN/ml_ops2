@@ -1,6 +1,7 @@
 import torch
 from torch import nn
-
+import pytest
+from my_project.model import MyAwesomeModel
 
 class MyAwesomeModel(nn.Module):
     """My awesome model."""
@@ -15,6 +16,10 @@ class MyAwesomeModel(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward pass."""
+        if x.ndim != 4:
+            raise ValueError('Expected input to a 4D tensor')
+        if x.shape[1] != 1 or x.shape[2] != 28 or x.shape[3] != 28:
+            raise ValueError('Expected each sample to have shape [1, 28, 28]')
         x = torch.relu(self.conv1(x))
         x = torch.max_pool2d(x, 2, 2)
         x = torch.relu(self.conv2(x))
@@ -24,6 +29,13 @@ class MyAwesomeModel(nn.Module):
         x = torch.flatten(x, 1)
         x = self.dropout(x)
         return self.fc1(x)
+
+def test_error_on_wrong_shape():
+    model = MyAwesomeModel()
+    with pytest.raises(ValueError, match='Expected input to a 4D tensor'):
+        model(torch.randn(1,2,3))
+    with pytest.raises(ValueError, match='Expected each sample to have shape [1, 28, 28]'):
+        model(torch.randn(1,1,28,29))
 
 
 if __name__ == "__main__":

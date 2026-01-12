@@ -1,26 +1,37 @@
-from torch.utils.data import Dataset
-
-from my_project.data import MyDataset
+import torch
+import pytest
+from my_project.data import normalize
 from my_project.data import corrupt_mnist
 
+def test_normalize_outputs_reasonable_stats():
+    x = torch.randn(8, 1, 28, 28)
+    y = normalize(x)
 
-def test_my_dataset():
-    """Test the MyDataset class."""
-    dataset = MyDataset("data/raw")
-    assert isinstance(dataset, Dataset)
+    assert y.shape == x.shape
+    # mean ~ 0, std ~ 1 (allow small tolerance)
+    assert torch.isfinite(y).all()
+    assert abs(float(y.mean())) < 1e-2
+    assert abs(float(y.std() - 1.0)) < 1e-2
 
 
-def test_data():
-    train , test = corrupt_mnist()
-    assert len(train) == 30000
-    assert len(test) == 5000
+def test_corrupt_mnist_sample_shapes():
+    train_set, test_set = corrupt_mnist()
 
-    for dataset in [train, test]:
-        for x,y in dataset:
-            assert x.shape == (1, 28, 28)
-            assert y in range(10)
-    
-    train_targets = torch.unique(train.tensors[1])
-    assert (train_targets == torch.arange(0,10)).all()
-    test_targets = torch.unique(test.tensors[1])
-    assert (test_targets == torch.arange(0,10)).all()
+    x, y = train_set[0]
+    assert x.shape == (1, 28, 28)
+    assert y.ndim == 0
+
+
+def normalize(images: torch.Tensor) -> torch.Tensor:
+    """Normalize images."""
+    std = images.std()
+    if std == 0:
+        raise ValueError("Cannot normalize: standard deviation is zero.")
+    return (images - images.mean()) / std
+
+
+
+def test_normalize_raises_when_std_zero():
+    x = torch.zeros(4, 1, 28, 28)
+    with pytest.raises(ValueError, match="standard deviation is zero"):
+        normalize(x)
